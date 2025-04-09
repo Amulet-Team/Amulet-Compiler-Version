@@ -27,13 +27,17 @@ jobs:
         pip install build twine
 
     - name: Build unspecialised
+      env:
+        BUILD_SPECIALISED: '0'
       run: |
+        rm -rf src
         python -m build .
 
     - name: Build specialised
       env:
-        BUILD_SPECIALISED: 1
+        BUILD_SPECIALISED: '1'
       run: |
+        rm -rf src
         python -m build .
 
     - name: Publish
