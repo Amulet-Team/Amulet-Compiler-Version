@@ -33,4 +33,5 @@ Issues = "https://github.com/Amulet-Team/Amulet-Compiler-Version/issues"
 include-package-data = false
 
 [tool.setuptools.dynamic]
+version = {attr = "amulet_compiler_version.__version__"}
 readme = {file = ["README.md"], content-type = "text/markdown"}

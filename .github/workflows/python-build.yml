@@ -32,15 +32,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install build twine
 
-    - name: Build unspecialised
+    - name: Build
       run: |
-        python -m build --sdist .
-
-    - name: Build specialised
-      env:
-        AMULET_FREEZE_COMPILER: 1
-      run: |
-        python -m build --wheel .
+        python -m build .
 
     - name: Publish
       env:
