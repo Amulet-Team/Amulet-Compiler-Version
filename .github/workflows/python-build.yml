@@ -33,14 +33,10 @@ jobs:
         pip install build twine
 
     - name: Build unspecialised
+      env:
+        AMULET_SDIST: 1
       run: |
         python -m build --sdist .
-
-    - name: Build specialised
-      env:
-        AMULET_FREEZE_COMPILER: 1
-      run: |
-        python -m build --wheel .
 
     - name: Publish
       env:
