@@ -1,0 +1,35 @@
+name: 'Install Specialised Amulet Compiler Version'
+description: 'Build, publish and install this library specialised for the installed compiler. Requires Python, build and twine.'
+outputs:
+  version:
+    description: "The version number of the installed library."
+    value: ${{ steps.get-version.outputs.version }}
+runs:
+  using: "composite"
+  steps:
+    - name: Build Amulet-Compiler-Version
+      shell: bash
+      env:
+        BUILD_SPECIALISED: 1
+      run: |
+        python -m build --wheel ${{ github.action_path }}/../../../..
+
+    - name: Publish Amulet-Compiler-Version
+      shell: bash
+      env:
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.AMULET_COMPILER_VERSION_PYPI_PASSWORD }}
+      run: |
+        twine upload ${{ github.action_path }}/../../../../dist/* --skip-existing
+
+    - name: Install Amulet-Compiler-Version
+      shell: bash
+      run: |
+        python -m pip install ${{ github.action_path }}/../../../../dist/amulet_compiler_version-*.whl
+
+    - name: Get __version__
+      id: get-version
+      shell: bash
+      run: |
+        version=$(python -c "import amulet_compiler_version; print(amulet_compiler_version.__version__)")
+        echo "version=$version" >> "$GITHUB_OUTPUT"
