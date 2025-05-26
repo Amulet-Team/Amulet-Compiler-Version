@@ -18,7 +18,7 @@ runs:
       env:
         BUILD_SPECIALISED: 1
       run: |
-        python -m build --wheel ${{ github.action_path }}/../../../..
+        python -m build --wheel ${{ github.action_path }}/../../..
 
     - name: Publish Amulet-Compiler-Version
       shell: bash
@@ -26,12 +26,12 @@ runs:
         TWINE_USERNAME: ${{ inputs.twine-username }}
         TWINE_PASSWORD: ${{ inputs.twine-password }}
       run: |
-        twine upload ${{ github.action_path }}/../../../../dist/* --skip-existing
+        twine upload ${{ github.action_path }}/../../../dist/* --skip-existing
 
     - name: Install Amulet-Compiler-Version
       shell: bash
       run: |
-        python -m pip install ${{ github.action_path }}/../../../../dist/amulet_compiler_version-*.whl
+        python -m pip install ${{ github.action_path }}/../../../dist/amulet_compiler_version-*.whl
 
     - name: Get __version__
       id: get-version
