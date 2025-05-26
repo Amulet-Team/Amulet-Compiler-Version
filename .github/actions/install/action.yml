@@ -16,7 +16,7 @@ runs:
     - name: Build Amulet-Compiler-Version
       shell: bash
       env:
-        BUILD_SPECIALISED: 1
+        AMULET_FREEZE_COMPILER: 1
       run: |
         python -m build --wheel "${{ github.action_path }}"/../../..
 
