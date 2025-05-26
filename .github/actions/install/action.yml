@@ -1,5 +1,11 @@
 name: 'Install Specialised Amulet Compiler Version'
 description: 'Build, publish and install this library specialised for the installed compiler. Requires Python, build and twine.'
+inputs:
+  twine-username:
+    description: 'The twine username'
+
+  twine-password:
+    description: 'The twine password'
 outputs:
   version:
     description: "The version number of the installed library."
@@ -17,8 +23,8 @@ runs:
     - name: Publish Amulet-Compiler-Version
       shell: bash
       env:
-        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-        TWINE_PASSWORD: ${{ secrets.AMULET_COMPILER_VERSION_PYPI_PASSWORD }}
+        TWINE_USERNAME: ${{ inputs.twine-username }}
+        TWINE_PASSWORD: ${{ inputs.twine-password }}
       run: |
         twine upload ${{ github.action_path }}/../../../../dist/* --skip-existing
 
