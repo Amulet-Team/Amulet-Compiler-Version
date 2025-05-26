@@ -3,13 +3,15 @@ import os
 
 from setuptools import setup
 
-version = "2.1.0"
+version = "3.0.0"
+compiler_id_str = "UNKNOWN"
+compiler_version = "UNKNOWN"
 
-if not os.environ.get("AMULET_SDIST", None):
+if os.environ.get("AMULET_FREEZE_COMPILER", None):
     # verify cmake is installed
     if subprocess.run(["cmake", "--version"]).returncode:
         raise RuntimeError(
-            "Could not find cmake command. cmake is required to compile extension code."
+            "Could not find cmake command. cmake is required to get compiler version."
         )
 
     # get the compiler id and version
@@ -35,12 +37,13 @@ if not os.environ.get("AMULET_SDIST", None):
     # combine the compiler id and compiler version into a version number
     version = f"{version}.{compiler_id_int}.{compiler_version}"
 
-    # write the python file
-    os.makedirs("src", exist_ok=True)
-    with open("src/amulet_compiler_version.py", "w") as f:
-        f.write(f'compiler_id = "{compiler_id_str}"\n')
-        f.write(f'compiler_version = "{compiler_version}"\n')
-        f.write(f'__version__ = "{version}"\n')
+
+# write the python file
+os.makedirs("src", exist_ok=True)
+with open("src/amulet_compiler_version.py", "w") as f:
+    f.write(f'compiler_id = "{compiler_id_str}"\n')
+    f.write(f'compiler_version = "{compiler_version}"\n')
+    f.write(f'__version__ = "{version}"\n')
 
 
 # run setup with the generated or default version
