@@ -3,13 +3,15 @@ description: 'Build, publish and install this library specialised for the instal
 inputs:
   twine-username:
     description: 'The twine username'
-
   twine-password:
     description: 'The twine password'
 outputs:
   version:
     description: "The version number of the installed library."
     value: ${{ steps.get-version.outputs.version }}
+  suffix:
+    description: "The compiler suffix"
+    value: ${{ steps.get-version.outputs.suffix }}
 runs:
   using: "composite"
   steps:
@@ -39,3 +41,5 @@ runs:
       run: |
         version=$(python -c "import amulet_compiler_version; print(amulet_compiler_version.__version__)")
         echo "version=$version" >> "$GITHUB_OUTPUT"
+        suffix=$(python -c "import amulet_compiler_version; print(f\".{'.'.join(amulet_compiler_version.__version__.split('.')[3:])}\")")
+        echo "suffix=$suffix" >> "$GITHUB_OUTPUT"
