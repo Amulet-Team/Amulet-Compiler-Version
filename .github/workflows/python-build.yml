@@ -34,7 +34,7 @@ jobs:
 
     - name: Build
       run: |
-        python -m build .
+        python -m build --wheel .
 
     - name: Publish
       env:
