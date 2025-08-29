@@ -3,7 +3,6 @@ import os
 
 from setuptools import setup
 
-version = "3.0.0"
 compiler_id_str = "UNKNOWN"
 compiler_version = "UNKNOWN"
 
@@ -36,6 +35,7 @@ if os.environ.get("AMULET_FREEZE_COMPILER", None):
 
     # combine the compiler id and compiler version into a version number
     version = f"{version}.{compiler_id_int}.{compiler_version}"
+MajorVersion = "4"
 
 
 # write the python file
